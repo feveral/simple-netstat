@@ -1,0 +1,4 @@
+*.o
+peda-session-hw-netstat.txt
+.gdb_history
+hw-netstat
