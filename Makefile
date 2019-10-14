@@ -10,7 +10,7 @@ OBJS = \
 EXEC = hw-netstat
 
 src/%.o: src/%.c
-	$(CC) $(CFLAGS) -o $@ -MMD -c $<
+	$(CC) $(CFLAGS) -o $@ -c $<
 
 $(EXEC): $(OBJS)
 	$(CC) $(OBJS) -o $@
@@ -19,4 +19,4 @@ all: $(EXEC)
 run: $(EXEC) 
 	sudo ./$(EXEC)
 clean:
-	rm *.o *.o.d $(EXEC)
+	rm $(OBJS) $(EXEC)

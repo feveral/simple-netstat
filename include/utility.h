@@ -8,6 +8,7 @@ void printConnection(Connection *);
 void printString(char *);
 List * split(char *, const char *);
 char * subString(char *, int, int);
+char * intToString(int);
 int hexStringToInt(char *);
 char * concat(const char *, const char *);
 char * addressToIP4(char *);
