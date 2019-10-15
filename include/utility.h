@@ -3,12 +3,15 @@
 
 #include "list.h"
 #include "connection.h"
+#include "process.h"
 
 void printConnection(Connection *);
+void printProcess(Process *p);
 void printString(char *);
 List * split(char *, const char *);
 char * subString(char *, int, int);
 char * intToString(int);
+int stringToInt(char *);
 int hexStringToInt(char *);
 char * concat(const char *, const char *);
 char * addressToIP4(char *);

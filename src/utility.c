@@ -1,7 +1,10 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdbool.h>
 #include "utility.h"
 #include "connection.h"
+#include "process.h"
+#include "list.h"
 
 void printConnection(Connection *c)
 {
@@ -10,7 +13,15 @@ void printConnection(Connection *c)
     printf("%-20s", c->rawLocalAddress);
     printf("%-20s", c->foreignAddress);
     printf("%-20s", c->rawForeignAddress);
+    printf("%-20d", c->inode);
     printf("\n");
+}
+
+void printProcess(Process *p)
+{
+    printf("pid: %s ", p->pid);
+    printf("command: %s", p->command);
+    listForEach(p->socketInodes, printString);
 }
 
 void printString(char *string)
@@ -42,6 +53,11 @@ List *split(char *string, const char *token)
 int hexStringToInt(char *hexString)
 {
     return (int)strtol(hexString, NULL, 16);
+}
+
+int stringToInt(char *string)
+{
+    return (int)strtol(string, NULL, 10);
 }
 
 char * intToString(int num)

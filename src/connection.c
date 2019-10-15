@@ -18,7 +18,7 @@
 #define UDP_SOURCE_PATH "/proc/net/udp"
 #define UDP6_SOURCE_PATH "/proc/net/udp6"
 
-Connection * connectionNew(char *local, char *foreign, char *type)
+Connection * connectionNew(char *local, char *foreign, char *inode, char *type)
 {
     Connection *connection = malloc(sizeof(Connection));
     
@@ -36,8 +36,12 @@ Connection * connectionNew(char *local, char *foreign, char *type)
     memcpy(connection->localAddress, localAddress, (sizeof(char))* strlen(localAddress)+1);
     memcpy(connection->foreignAddress, foreignAddress, (sizeof(char))* strlen(foreignAddress)+1);
     
+    connection->inode = malloc((sizeof(char)) * strlen(inode)+1);
+    memcpy(connection->inode, inode, (sizeof(char))* strlen(inode)+1);
+    
     connection->type = malloc((sizeof(char)) * strlen(type)+1);
     memcpy(connection->type, type, (sizeof(char))*strlen(type)+1);
+
     return connection;
 }
 
@@ -72,14 +76,7 @@ Connection * parseRecordToConnection(char *record, char *type)
     ListCell *localAddressCell = listGet(items, 1);
     ListCell *foreignAddressCell = listGet(items, 2);
     ListCell *inodeCell = listGet(items, 9);
-
-    // printString(localAddressCell->value);
-    // printString(foreignAddressCell->value);
-    // printString(inodeCell->value);
-
-    // TODO: put inode into connection
-
-    return connectionNew(localAddressCell->value, foreignAddressCell->value, type);
+    return connectionNew(localAddressCell->value, foreignAddressCell->value, inodeCell->value, type);
 }
 
 List * findConnections(char *type)
@@ -113,4 +110,16 @@ List * findConnections(char *type)
         current = current->next;
     }
     return connections;
+}
+
+Process * findProcessByConnection(List *processList, Connection *connection)
+{
+    ListCell *pCell = processList->head;
+    while(pCell != NULL) {
+        if (isInodeInProcess(pCell->value, connection->inode)) {
+            return pCell->value;
+        }
+        pCell = pCell->next;
+    }
+    return NULL;
 }

@@ -17,6 +17,7 @@ typedef struct list {
 } List;
 
 List* listNew();
+ListCell *listCellNew(void *value, size_t size);
 void listAppend(List *list, ListCell *cell);
 void listAppendString(List *list, char *);
 void listForEach(List *list, void (*func)(void *));
