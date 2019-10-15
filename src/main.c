@@ -31,11 +31,7 @@ void outputConnectionResult(List *connectionList, List *processList, char *keywo
 
 int main(int argc, char **argv) 
 {
-
-    addressToIp6("BACD0120000000000000000052965732");
-
     int opt;
-    int digit_optind = 0;
     int option_index = 0;
     char *optstring = ":tu";
     static struct option long_options[] = {

@@ -69,7 +69,7 @@ char * translateNetworkAddress(char *address16, char *type)
         char *ip6addr = addressToIp6(address16);
         char *ip6port = intToString(hexStringToInt(subString(address16, 33, 37)));
         return concat(ip6addr, concat(":", ip6port));
-    }
+    } else return NULL;
 }
 
 Connection * parseRecordToConnection(char *record, char *type)
@@ -100,7 +100,7 @@ List * findConnections(char *type)
     memset(&buffer[0], 0, sizeof(buffer));
 
     FILE *fp = fopen(sourcePath, "r");
-    size_t size = fread(buffer, bufferSize, 1, fp);
+    fread(buffer, bufferSize, 1, fp);
     List *lines = split(buffer, "\n");
 
     ListCell *current = lines->head;

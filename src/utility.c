@@ -15,7 +15,7 @@ void printConnection(Connection *c)
     printf("%-20s", c->rawLocalAddress);
     printf("%-20s", c->foreignAddress);
     printf("%-20s", c->rawForeignAddress);
-    printf("%-20d", c->inode);
+    printf("%-20s", c->inode);
     printf("\n");
 }
 

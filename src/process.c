@@ -2,8 +2,10 @@
 #include <string.h>
 #include <dirent.h>
 #include <stdbool.h>
+#include <ctype.h>
 #include "list.h"
 #include "process.h"
+#include "utility.h"
 
 
 Process *processNew(char *pid, char *command, List *socketInodes)
@@ -54,7 +56,7 @@ char *findCommandByPid(char *pid)
     char *command = malloc(sizeof(char) * 128);
     memset(&command[0], 0, 128);
     FILE *fp = fopen(path, "r");
-    size_t size = fread(command, 128, 1, fp);
+    fread(command, 128, 1, fp);
 
     int finalCharIndex = 0;
     for (int i = 0; i <128; i++) {
@@ -64,7 +66,7 @@ char *findCommandByPid(char *pid)
             finalCharIndex = i;
         }
     }
-    
+
     command[finalCharIndex + 1] = '\n';
     command[finalCharIndex + 2] = '\0';
     return command;
