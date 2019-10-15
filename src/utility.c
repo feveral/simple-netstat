@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdbool.h>
+#include <regex.h> 
 #include "utility.h"
 #include "connection.h"
 #include "process.h"
@@ -82,6 +83,16 @@ char * subString(char *string, int start, int end)
         strncpy(substring, string + start, end - start);
     }
     return substring;
+}
+
+bool regexIsMatch(char *pattern, char *string)
+{
+    regex_t reg;
+    regcomp(&reg, pattern, REG_EXTENDED);
+    const size_t nmatch = 1;
+    regmatch_t pmatch[1];
+    int status = regexec(&reg, string, nmatch, pmatch, 0); //匹配他
+    return !(status == REG_NOMATCH);
 }
 
 char * addressToIP4(char *address)

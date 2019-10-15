@@ -18,12 +18,12 @@ void outputConnectionResult(List *connectionList, List *processList, char *keywo
     while(connectionCell!= NULL) {
         Connection *connection = connectionCell->value;
         Process *process = findProcessByConnection(processList, connectionCell->value);
-
-        if (keyword == NULL || strstr(process->command, keyword)) {
+        if (keyword == NULL || (process != NULL && regexIsMatch(keyword, process->command))) {
             printf("%-6s", connection->type);
             printf("%-22s  ", connection->localAddress);
             printf("%-20s", connection->foreignAddress);
-            printf("%8s/%s", process->pid, process->command);
+            if (process != NULL) printf("%8s/%s", process->pid, process->command);
+            else printf("%13s\n", "----/----");
         }
         connectionCell = connectionCell->next;
     }    

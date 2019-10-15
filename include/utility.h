@@ -14,6 +14,7 @@ char * intToString(int);
 int stringToInt(char *);
 int hexStringToInt(char *);
 char * concat(const char *, const char *);
+bool regexIsMatch(char *, char *);
 char * addressToIP4(char *);
 char * addressToIp6(char *);
 

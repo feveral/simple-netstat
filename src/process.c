@@ -60,15 +60,20 @@ char *findCommandByPid(char *pid)
 
 List *findSocketInodesByPid(char *pid)
 {
+    List *inodes = listNew();
     char *path = concat("/proc/", pid);
     path = concat(path, "/fd/");
     DIR * dir;
     struct dirent * ptr;
     dir = opendir(path);
-    List *inodes = listNew();
+    if (dir == NULL) {
+        return inodes;
+    }
     while((ptr = readdir(dir)) != NULL) {
-        char * inode = findInodeByLinkPath(concat(path, ptr->d_name));
-        if (inode != NULL) listAppend(inodes, listCellNew(inode, sizeof(inode)));
+        if (strcmp(ptr->d_name,".") && strcmp(ptr->d_name,"..")) {
+            char * inode = findInodeByLinkPath(concat(path, ptr->d_name));
+            if (inode != NULL) listAppend(inodes, listCellNew(inode, sizeof(inode)));
+        }
     }
     closedir(dir);
     return inodes;
