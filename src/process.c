@@ -50,11 +50,23 @@ List * findAllProcess()
 char *findCommandByPid(char *pid)
 {
     char *path = concat("/proc/", pid);
-    path = concat(path, "/comm");
+    path = concat(path, "/cmdline");
     char *command = malloc(sizeof(char) * 128);
     memset(&command[0], 0, 128);
     FILE *fp = fopen(path, "r");
     size_t size = fread(command, 128, 1, fp);
+
+    int finalCharIndex = 0;
+    for (int i = 0; i <128; i++) {
+        if (command[i] == '\0') {
+            command[i] = ' ';
+        } else {
+            finalCharIndex = i;
+        }
+    }
+    
+    command[finalCharIndex + 1] = '\n';
+    command[finalCharIndex + 2] = '\0';
     return command;
 }
 
