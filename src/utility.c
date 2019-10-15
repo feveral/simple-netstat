@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdbool.h>
+#include <stdlib.h>
 #include <regex.h> 
 #include "utility.h"
 #include "connection.h"
@@ -113,5 +114,24 @@ char * addressToIP4(char *address)
 
 char * addressToIp6(char *address)
 {
-
+    char *result = "";
+    char *tmp = malloc(sizeof(char) * 33);
+    for (int i = 0; i < 4; i++) {
+        tmp[0+8*i] = address[6+8*i];
+        tmp[1+8*i] = address[7+8*i];
+        tmp[2+8*i] = address[4+8*i];
+        tmp[3+8*i] = address[5+8*i];
+        tmp[4+8*i] = address[2+8*i];
+        tmp[5+8*i] = address[3+8*i];
+        tmp[6+8*i] = address[0+8*i];
+        tmp[7+8*i] = address[1+8*i];
+    }
+    for (int i = 0; i < 8; i++) {
+        char *numString = subString(tmp, i*4, i*4+4);
+        int num = stringToInt(numString);
+        result = concat(result, intToString(num));
+        if (i != 7) result = concat(result, ":");
+        free(numString);
+    }
+    return result;
 }

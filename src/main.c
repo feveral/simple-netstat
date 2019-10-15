@@ -31,6 +31,9 @@ void outputConnectionResult(List *connectionList, List *processList, char *keywo
 
 int main(int argc, char **argv) 
 {
+
+    addressToIp6("BACD0120000000000000000052965732");
+
     int opt;
     int digit_optind = 0;
     int option_index = 0;
@@ -69,6 +72,7 @@ int main(int argc, char **argv)
     printString("Proto Local Address           Foreign Address         PID/Program name and arguments");
     outputConnectionResult(tcpConnections, processList, argv[optind]);
     outputConnectionResult(tcp6Connections, processList, argv[optind]);
+    printString("");
     printString("List of UDP connections:");
     printString("Proto Local Address           Foreign Address         PID/Program name and arguments");
     outputConnectionResult(udpConnections, processList, argv[optind]);

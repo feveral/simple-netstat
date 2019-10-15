@@ -66,7 +66,9 @@ char * translateNetworkAddress(char *address16, char *type)
         
         return concat(ip4addr, concat(":", ip4port));
     } else if (strcmp(type, CONNECTION_TCP6) == 0 || strcmp(type, CONNECTION_UDP6) == 0) {
-        return address16;
+        char *ip6addr = addressToIp6(address16);
+        char *ip6port = intToString(hexStringToInt(subString(address16, 33, 37)));
+        return concat(ip6addr, concat(":", ip6port));
     }
 }
 
