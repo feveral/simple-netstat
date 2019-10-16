@@ -22,7 +22,7 @@ void outputConnectionResult(List *connectionList, List *processList, char *keywo
             printf("%-6s", connection->type);
             printf("%-22s  ", connection->localAddress);
             printf("%-20s", connection->foreignAddress);
-            if (process != NULL) printf("%8s/%s", process->pid, process->command);
+            if (process != NULL) printf("%8s / %s", process->pid, process->command);
             else printf("%13s\n", "----/----");
         }
         connectionCell = connectionCell->next;

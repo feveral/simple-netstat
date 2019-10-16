@@ -66,7 +66,6 @@ char *findCommandByPid(char *pid)
             finalCharIndex = i;
         }
     }
-
     command[finalCharIndex + 1] = '\n';
     command[finalCharIndex + 2] = '\0';
     return command;
