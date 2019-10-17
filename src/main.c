@@ -22,8 +22,8 @@ void outputConnectionResult(List *connectionList, List *processList, char *keywo
             printf("%-6s", connection->type);
             printf("%-22s  ", connection->localAddress);
             printf("%-20s", connection->foreignAddress);
-            if (process != NULL) printf("%8s / %s", process->pid, process->command);
-            else printf("%13s\n", "----/----");
+            if (process != NULL) printf("%8s/%s", process->pid, process->command);
+            else printf("%10s\n", "-");
         }
         connectionCell = connectionCell->next;
     }    
@@ -60,10 +60,10 @@ int main(int argc, char **argv)
             return 0;
         }
     }
-    List *udpConnections = findConnections("udp");
-    List *udp6Connections = findConnections("udp6");
     List *tcpConnections = findConnections("tcp");
     List *tcp6Connections = findConnections("tcp6");
+    List *udpConnections = findConnections("udp");
+    List *udp6Connections = findConnections("udp6");
     printString("List of TCP connections:");
     printString("Proto Local Address           Foreign Address         PID/Program name and arguments");
     outputConnectionResult(tcpConnections, processList, argv[optind]);

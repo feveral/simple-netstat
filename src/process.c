@@ -68,7 +68,11 @@ char *findCommandByPid(char *pid)
     }
     command[finalCharIndex + 1] = '\n';
     command[finalCharIndex + 2] = '\0';
-    return command;
+    List *list = split(command, " ");
+    char *commFull = listGet(list, 0)->value;
+    char *commandSimplify = concat(basename(commFull), subString(command, strlen(commFull), strlen(command)+1));
+    free(command);
+    return commandSimplify;
 }
 
 List *findSocketInodesByPid(char *pid)

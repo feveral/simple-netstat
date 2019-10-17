@@ -3,6 +3,7 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <regex.h> 
+#include <netinet/in.h>
 #include "utility.h"
 #include "connection.h"
 #include "process.h"
@@ -98,17 +99,13 @@ bool regexIsMatch(char *pattern, char *string)
 
 char * addressToIP4(char *address)
 {
-    char *result = "";
-    for(int i = 3; i >= 0; i--) {
-        char hexNum[3];
-        hexNum[0] = address[i*2];
-        hexNum[1] = address[i*2+1];
-        hexNum[2] = '\0';
-        int num = hexStringToInt(hexNum);
-        char *str = intToString(num); // memory leak problem
-        result = concat(result, str);
-        if (i != 0) result = concat(result, ".");
-    }
+    char *result = malloc(sizeof(char) * 64);
+    struct sockaddr_in sa;
+    struct in_addr ip;
+    ip.s_addr = hexStringToInt(subString(address, 0, 8));
+    sa.sin_family = AF_INET; 
+    sa.sin_addr = ip;
+    inet_ntop(AF_INET, &(sa.sin_addr), result, INET_ADDRSTRLEN);
     return result;
 }
 
@@ -116,6 +113,8 @@ char * addressToIp6(char *address)
 {
     char *result = "";
     char *tmp = malloc(sizeof(char) * 33);
+    memset(tmp, 0, 33);
+
     for (int i = 0; i < 4; i++) {
         tmp[0+8*i] = address[6+8*i];
         tmp[1+8*i] = address[7+8*i];
@@ -126,12 +125,15 @@ char * addressToIp6(char *address)
         tmp[6+8*i] = address[0+8*i];
         tmp[7+8*i] = address[1+8*i];
     }
-    for (int i = 0; i < 8; i++) {
-        char *numString = subString(tmp, i*4, i*4+4);
-        int num = stringToInt(numString);
-        result = concat(result, intToString(num));
-        if (i != 7) result = concat(result, ":");
-        free(numString);
+    char *resultAddress = malloc(sizeof(char) * 128);
+    memset(resultAddress, 0, 128);
+    struct sockaddr_in6 sa;
+    struct in6_addr ip;
+    for(int i = 0; i < 16;i++) {
+        ip.s6_addr[i] = hexStringToInt(subString(tmp, i*2, i*2+2)); 
     }
-    return result;
+    sa.sin6_family = AF_INET6; 
+    sa.sin6_addr = ip;
+    inet_ntop(AF_INET6, &(sa.sin6_addr), resultAddress, INET6_ADDRSTRLEN);
+    return resultAddress;
 }
