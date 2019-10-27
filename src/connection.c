@@ -48,22 +48,8 @@ Connection * connectionNew(char *local, char *foreign, char *inode, char *type)
 char * translateNetworkAddress(char *address16, char *type)
 {
     if (strcmp(type, CONNECTION_TCP) == 0 || strcmp(type, CONNECTION_UDP) == 0) {
-        // struct sockaddr_storage sas;
-        // struct sockaddr_in *addrin = (struct sockaddr_in *)&sas;
-
-        // char addrString[128];
-        // int port;
-        // sscanf(address16, "%64[0-9A-Fa-f]:%X", addrString, &port);
-        // sscanf(addrString, "%X", &addrin->sin_addr.s_addr);
-        // sas.ss_family = AF_INET;
-        
-        // char *resultAddress = malloc(sizeof(char) * INET_ADDRSTRLEN);
-        // inet_ntop(AF_INET, addrin, resultAddress, INET_ADDRSTRLEN);
-        // return resultAddress;        
-
         char *ip4addr = addressToIP4(address16);
         char *ip4port = intToString(hexStringToInt(subString(address16, 9, 13)));
-        
         return concat(ip4addr, concat(":", ip4port));
     } else if (strcmp(type, CONNECTION_TCP6) == 0 || strcmp(type, CONNECTION_UDP6) == 0) {
         char *ip6addr = addressToIp6(address16);

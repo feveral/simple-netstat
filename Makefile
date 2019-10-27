@@ -7,7 +7,7 @@ OBJS = \
 	src/utility.o \
 	src/process.o
 
-EXEC = hw-netstat
+EXEC = simple-netstat
 
 src/%.o: src/%.c
 	$(CC) $(CFLAGS) -o $@ -c $<
