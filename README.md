@@ -59,9 +59,10 @@ sudo ./hw-netstat
 sudo ./hw-netstat --tcp
 ```
 
-- run with option and regex string filter
+- run with option and string filter(support regex expression)
 ```
-sudo ./hw-netstat --udp d.*q
+sudo ./hw-netstat --udp ptt.cc
+sudo ./hw-netstat --udp p.*c
 ```
 
 
