@@ -51,22 +51,22 @@ make clean
 
 - run without any option
 ```
-sudo ./hw-netstat
+sudo ./simple-netstat
 ```
 
 - run with option
 ```
-sudo ./hw-netstat --tcp
+sudo ./simple-netstat --tcp
 ```
 
 - run with option and string filter(support regex expression)
 ```
-sudo ./hw-netstat --udp ptt.cc
-sudo ./hw-netstat --udp p.*c
+sudo ./simple-netstat --udp ptt.cc
+sudo ./simple-netstat --udp p.*c
 ```
 
 
 **If you run without sudo, some pid/program name won't show**
 ```
-./hw-netstat
+./simple-netstat
 ```
