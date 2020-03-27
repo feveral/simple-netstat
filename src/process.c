@@ -70,7 +70,10 @@ char *findCommandByPid(char *pid)
     command[finalCharIndex + 2] = '\0';
     List *list = split(command, " ");
     char *commFull = listGet(list, 0)->value;
-    char *commandSimplify = concat(basename(commFull), subString(command, strlen(commFull), strlen(command)+1));
+    for(int i=0;i<strlen(commFull);i++) {
+        if (commFull[i] == '\n') commFull[i] = '\0';
+    }
+    char *commandSimplify = concat(commFull, subString(command, strlen(commFull), strlen(command)+1));
     free(command);
     return commandSimplify;
 }

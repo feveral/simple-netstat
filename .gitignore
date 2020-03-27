@@ -2,4 +2,4 @@
 *.d
 peda-session-hw-netstat.txt
 .gdb_history
-hw-netstat
+simple-netstat
